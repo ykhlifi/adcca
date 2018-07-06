@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ehcache  
+    xsi:noNamespaceSchemaLocation="ehcache.xsd" 
+    updateCheck="true" 
+    monitoring="autodetect" 
+    dynamicConfig="true"
+    maxBytesLocalHeap="150M">
+  <diskStore path="java.io.tmpdir"/>    
+  <defaultCache 
+    eternal="false" 
+    maxElementsInMemory="100" 
+    overflowToDisk="false"    />
+  <cache name="dataCache" 
+    eternal="false"
+    timeToIdleSeconds="300"
+    maxBytesLocalHeap="30M"
+    timeToLiveSeconds="300"
+    overflowToDisk="true"
+    diskPersistent="false"
+    diskExpiryThreadIntervalSeconds="120"
+    memoryStoreEvictionPolicy="LRU"/>      
+</ehcache>
+
+<!-- 
+    name : un identifiant du cache ;
+    maxBytesLocalHeap : définit le nombre d'octets que le cache peut utiliser de la VM. Si un CacheManager maxBytesLocalHeap a été défini, la taille déterminée de ce cache sera soustraite du CacheManager. D'autres caches partagent le reste. Les valeurs de cet attribut sont données sous la forme <nombre> k | K | M | M | g | G (k | K pour kilo-octets, m | M pour mégaoctets, ou g | G pour gigaoctets). Par exemple : 30m pour 30 mégaoctets ;
+    eternal : définit si les éléments sont éternels. Si c'est le cas, le timeout sera ignoré et l'élément n'est jamais expiré ;
+    timeToIdleSeconds : c'est le nombre de secondes que l'élément doit vivre depuis sa dernière utilisation. La valeur par défaut est 0, l'élément reste toujours en repos ;
+    timeToLiveSeconds : c'est le nombre de secondes que l'élément doit vivre depuis sa création en cache. La valeur par défaut est 0, l'élément vivra éternellement ;
+
+    memoryStoreEvictionPolicy : politique d'éviction :
+        LRU - le moins récemment utilisé,
+        LFU - moins fréquemment utilisé,
+        FIFO - premier entré, premier sorti, l'élément le plus ancien par date de création ;
+    diskExpiryThreadIntervalSeconds : nombre de secondes entre deux exécutions du processus de contrôle d'éviction ;
+    diskPersistent : permet la mémorisation des objets sur le disque pour une récupération des objets entre deux démarrages de la VM ;
+    overflowToDisk : détermine si les objets peuvent être stockés sur le disque en cas d'atteinte du maximum d'éléments en mémoire.
+ -->
