@@ -9,7 +9,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 
 import fr.sqli.paja.adccaconfigurator.batch.BatchReader;
-import fr.sqli.paja.adccaconfigurator.batch.BatchWriter;
+import fr.sqli.paja.adccaconfigurator.batch.BatchWriterApache;
+import fr.sqli.paja.adccaconfigurator.batch.BatchWriterNginx;
 import fr.sqli.paja.adccaconfigurator.propertiesLoader.PropertyLoader;
 import fr.sqli.paja.adccaconfigurator.servicesreçu.BuildFile;
 import fr.sqli.paja.adccaconfigurator.url.ModelUrl;
@@ -24,6 +25,7 @@ public class AdccaConfiguratorApplication {
 	
 	static String input;
 	static String output;
+	static String serveur;
 	
 	public static void main(String[] args) throws JSONException, Exception {
 		
@@ -31,11 +33,10 @@ public class AdccaConfiguratorApplication {
  * charger le fichier de properties
  */
 				Properties prop = PropertyLoader.load("application.properties");
-				input=prop.getProperty("input");
-				output=prop.getProperty("output");
-				
-		// input utilisé dans la classe BatchReader******************************* 
-		//System.setProperty("input", "file://" + new File("D:\\projets\\eclipse-workspace\\adcca-configurator\\src\\main\\resources\\cvs\\input\\microservices.csv").getAbsolutePath());
+				input=prop.getProperty("input");//chemain ou se trouve le fichier à lire
+				output=prop.getProperty("output");//chemain ou on va ecrire un fichier de conf
+				serveur=prop.getProperty("serveur");// type de serveur web (Apache/Nginx)
+								
 		SpringApplication.run(AdccaConfiguratorApplication.class, args);
 		
 		new Thread(new Runnable() {
@@ -44,16 +45,30 @@ public class AdccaConfiguratorApplication {
 				try {
 					while (true) {
 						BuildFile.buildFile();
-						final List<ModelUrl> lst = new BatchReader(input).read();// pour créer une liste à partir de fichier input
-						new BatchWriter(output).write(lst);						
-						Thread.sleep(10000);
+						final List<ModelUrl> lst = new BatchReader(input).read();// pour créer une liste à partir de fichier input				
+
+								switch (serveur)
+								{							
+								  case "apache":
+									  new BatchWriterApache(output).write(lst);						
+										Thread.sleep(10000);
+								    break;
+								
+								  case "nginx":
+									  new BatchWriterNginx(output).write(lst);						
+										Thread.sleep(10000);
+								    break;
+								
+								  default:
+									  new BatchWriterNginx(output).write(lst);						
+										Thread.sleep(10000);								
+								}				
+						
 					}
 				} catch(Exception e) {
 					e.printStackTrace();
 				}
 			}
-		}).start();	
-		
-	}
-	
+		}).start();			
+	}	
 }

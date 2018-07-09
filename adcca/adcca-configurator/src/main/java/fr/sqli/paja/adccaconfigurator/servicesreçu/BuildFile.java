@@ -62,36 +62,20 @@ public class BuildFile {
 				     String microservices =map.toString();
 				     String str = microservices.replaceAll("\\{", "").replaceAll("\\}", "").replaceAll(", ", "\n")
 				    		 .replaceAll("=", ",");
-				     
-				     			    
-	//************************CREER UN FICHIER DANS LE DOSSIER INDIQUER DANS LE FICHIER DE PROPERTIES *************************			   
-				     				     
-				     /**
-				      * charger le chemain ou on vas mettre le fichier de properties
-				      */				     
+				     				     			    
+	//************************CREER UN FICHIER DANS LE DOSSIER INDIQUER DANS LE FICHIER DE PROPERTIES(conf)  *************************			   
+				     				     	     
 				     Properties prop = PropertyLoader.load("application.properties");
-				       /**
-				        * ecrire le fichier dans le repertoire de ce chemain { prop.getProperty("input")}
-				        */
+				       
 				       FileWriter fw = new FileWriter(new File(prop.getProperty("input")));
-				     //FileWriter fw = new FileWriter(new File("microservices.csv"));
 					   fw.write(str);
 					   fw.close();
 					   
 	//*********************** RELANCE APACHE POUR PRENDRE LA NOUVELLE CONFIGURATION *******************************
-    //Vous pouvez aussi redémarrer un service en exécution et le forcer à relire son fichier de configuration en utilisant :
-						  
-					   //httpd.exe -k restart -n "Nom-Service" 
 					   
 					   Runtime runtime = Runtime.getRuntime();
 					   runtime.exec(prop.getProperty("reload").split(","));
-					   
-					  // runtime.exec("\\etc\\apache2\\sudo systemctl reload apache2"); 
-					  // Process appli = runtime.exec( "\\etc\\apache2\\sudo systemctl reload apache2" );
-					  // runtime.exec(new String[] { "cmd/c restart C:\\Apache24\\bin\\restart.bat" });					  
-					  //runtime.exec(new String[] { "C:\\Apache24\\bin\\restart.bat"});
-					  //runtime.exec(new String[] { prop.getProperty("pathRestert")});
-					  
+					 
 				}			 
 		
 		}catch (Exception evt){
