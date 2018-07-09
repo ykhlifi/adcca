@@ -1,0 +1,5 @@
+consultHopital,http://,localhost:,7777,/consultHopital
+declarants,http://,localhost:,7777,/declarants
+enfants,http://,localhost:,7777,/enfants
+consultDeclarant,http://,localhost:,7777,/consultDeclarant
+consultEnfant,http://,localhost:,7777,/consultEnfant
