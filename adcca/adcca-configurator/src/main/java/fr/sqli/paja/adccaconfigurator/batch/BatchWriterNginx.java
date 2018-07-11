@@ -34,7 +34,7 @@ public class BatchWriterNginx {
 			sb.append("\n");
 			sb.append("server  {");
 			sb.append("\n");
-			sb.append("\t listen  "+port+";");
+			sb.append("\t listen   "+port+";");
 			sb.append("\n");
 			sb.append("\t server_name  "+serveurName+";");
 			sb.append("\n");
@@ -59,9 +59,10 @@ public class BatchWriterNginx {
 			
 			sb
 				.append("\n")
-				.append("\t\t location /"+ modelUrl.getService()+"{")
+				//attention: doit pas avoir espace entre slash(/) et nom de service : /enfants
+				.append("\t\t location   /"+modelUrl.getService()+"  {")
 				.append("\n")
-				.append("\t\t\t Proxy_Pass  ")
+				.append("\t\t\t proxy_pass   ")
 				.append(modelUrl.getProtocol())
 				.append(modelUrl.getHost())
 				.append(modelUrl.getPort())
