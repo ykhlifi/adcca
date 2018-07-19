@@ -1,34 +1,67 @@
 package fr.sqli.paja.adccaconfigurator.url;
 
 import java.io.Serializable;
-
+/**
+ * 
+ * @author sebouyahmed
+ *
+ */
 @SuppressWarnings("serial")
 public class ModelUrl implements Serializable {
-	private String service; // nom de service
+
+	private String cleService;// clé de service
+	private String nomapp;// nom de l'application, nom de fichier de conf de Vhost dans le serveur web
+	private String serverName; // servername au niveau de Vhost
 	private String protocol;
 	private String host; // localhost
 	private String port;
-	private String complement; // complément de service example : consultEnfant/1
-	
+	private String service; // complément de service example : consultEnfant/1
+
+	/**
+	 * Constructure sans paramètres
+	 */
 	public ModelUrl() {
 		super();
 	}
-
-	public ModelUrl(String service, String protocol, String host, String port, String complement) {
+	/**
+	 * Constructure avec paramètres
+	 */
+	public ModelUrl(String cleService, String nomapp, String serverName, String protocol, String host, String port,
+			String service) {
 		super();
-		this.service = service;
+		this.cleService = cleService;
+		this.nomapp = nomapp;
+		this.serverName = serverName;
 		this.protocol = protocol;
 		this.host = host;
 		this.port = port;
-		this.complement = complement;
-	}
-
-	public String getService() {
-		return service;
-	}
-
-	public void setService(String service) {
 		this.service = service;
+	}
+	/**
+	 * Getters & setters
+	 */
+	public String getCleService() {
+		return cleService;
+	}
+
+	public void setCleService(String cleService) {
+		this.cleService = cleService;
+	}
+
+	public String getNomapp() {
+		return nomapp;
+	}
+
+	public void setNomapp(String nomapp) {
+		this.nomapp = nomapp;
+	}
+
+	public String getServerName() {
+		return serverName;
+	}
+
+	public void setServerName(String serverName) {
+		this.serverName = serverName;
 	}
 
 	public String getProtocol() {
@@ -55,17 +88,18 @@ public class ModelUrl implements Serializable {
 		this.port = port;
 	}
 
-	public String getComplement() {
-		return complement;
+	public String getService() {
+		return service;
 	}
 
-	public void setComplement(String complement) {
-		this.complement = complement;
+	public void setService(String service) {
+		this.service = service;
 	}
 
 	@Override
 	public String toString() {
-		return "ModelUrl [service=" + service + ", protocol=" + protocol + ", host=" + host + ", port=" + port
-				+ ", complement=" + complement + "]";
+		return "ModelUrl [ cleService=" + cleService + ", nomapp=" + nomapp + ",serverName=" + serverName + ",protocol="
+				+ protocol + ", host=" + host + ", port=" + port + ", service=" + service + "]";
 	}
+
 }

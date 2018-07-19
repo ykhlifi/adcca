@@ -8,18 +8,17 @@ import java.util.Properties;
 public class PropertyLoader {
 	
 	/**
-	    * Charge la liste des propriétés contenu dans le fichier spécifié
-	    *
-	    * @param filename le fichier contenant les propriétés
-	    * @return un objet Properties contenant les propriétés du fichier
+	    * Charger les paramètres de configuration de Detector
+	    * @param filename (Path/nom_de_fichier) 
+	    * @return 
 	    */
 	   public static Properties load(String filename) throws IOException, FileNotFoundException{
 		   	   
 	       Properties properties = new Properties();
-	       /*
-	       path c'est le chemin ou se trouve le fichier de configuration de detector
-	       *
-	       */
+	       /**
+	        * path c'est le chemin ou se trouve le fichier de configuration de detector
+	        *
+	        */
 	       String path = System.getenv("HOME_DETECTOR");
 	       FileInputStream input = new FileInputStream(path+ "application.properties");
 	       
