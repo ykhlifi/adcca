@@ -16,9 +16,9 @@ import fr.sqli.paja.adccaconfigurator.url.ModelUrl;
  * @author sebouyahmed
  *
  */
-public class BatchWriterNginx {
+public class BatchWriterNginxTomcat {
 
-	final static Logger logger = Logger.getLogger(BatchWriterNginx.class);
+	final static Logger logger = Logger.getLogger(BatchWriterNginxTomcat.class);
 
 	private final String filename;
 
@@ -28,7 +28,7 @@ public class BatchWriterNginx {
 	 * @param filename
 	 *            (path/filename.conf)
 	 */
-	public BatchWriterNginx(String filename) {
+	public BatchWriterNginxTomcat(String filename) {
 		super();
 		this.filename = filename;
 	}
@@ -81,10 +81,16 @@ public class BatchWriterNginx {
 
 		sb.append("\n")
 				// attention: doit pas avoir espace entre slash(/)
-				.append("\t\t location   /" + modelUrl.getService() + "  {").append("\n").append("\t\t\t proxy_pass   ")
-				.append(modelUrl.getProtocol() + "://").append(modelUrl.getHost() + ":")
-				.append(modelUrl.getPort() + "/").append(modelUrl.getService() + ";").append("\n")
-				.append("\t\t\t proxy_redirect          default;").append("\n" + "\t\t}");
+				.append("\t\t location   /" + modelUrl.getService() + "  {")
+				.append("\n").append("\t\t\t proxy_pass   ")
+				.append(modelUrl.getProtocol() + "://")
+				.append(modelUrl.getHost() + ":")
+				.append(modelUrl.getPort() + "/")
+				.append(modelUrl.getNomapp() + "/")
+				.append(modelUrl.getService() + ";")
+				.append("\n")
+				.append("\t\t\t proxy_redirect          default;")
+				.append("\n" + "\t\t}");
 
 		return sb.toString();
 	}
@@ -96,7 +102,7 @@ public class BatchWriterNginx {
 	 */
 	public String chargeServerName(ModelUrl url) {
 		final StringBuilder sb = new StringBuilder();
-		sb.append("\tserver_name     " + url.getServerName() +";"+ "\n");
+		sb.append("\tserver_name     " + url.getServerName()+";" + "\n");
 		return sb.toString();
 
 	}
